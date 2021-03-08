@@ -4,6 +4,11 @@ Name:Gengwu Zhao
 """
 from prettytable import PrettyTable
 import datetime
+from us2_3 import *
+from us09_10 import *
+from us17_18 import *
+from us25_26 import *
+import datetime
 
 def get_file_str(file_path:str=None)->str:
     if file_path is None or file_path == '':
@@ -81,6 +86,25 @@ def get_result(txt:str):
     return indi,fami
 
 
+def sort_age(indi:dict(),Prin=False)->list():
+    row:PrettyTable=PrettyTable()
+    row.field_names=['ID','name','age']
+    age_name=list()
+    for Id in indi.keys():
+        if indi[Id]['Death']=='NA':
+            age=datetime.date.today().year-indi[Id]['Birthday'].year
+        else:
+            age=indi[Id]['Death'].year-indi[Id]['Birthday'].year
+        age_name.append([age,indi[Id]['Name'],Id])
+    age=sorted(age_name)
+    age_list=list()
+    for i in age:
+        row.add_row([i[2],i[1],i[0]])
+        age_list.append(i[0])
+    if(Prin):
+        print(row)
+    return age
+
 def PPrint(indi:dict(),fami:dict()):
     row1:PrettyTable=PrettyTable()
     row1.field_names=['ID','Name','Gender','Birthday', 'Age','Alive','Death','Child','Spoise']
@@ -96,16 +120,12 @@ def PPrint(indi:dict(),fami:dict()):
         row1.add_row(line)
     print(row1)
 
-        
     row2:PrettyTable=PrettyTable()
     row2.field_names=['ID','Married','Divorced','Husband name','Wifi ID','Wife Name','Children' ]
     for Id in fami.keys():
         line=[Id,fami[Id]['Married'],fami[Id]['Divorced'],indi[fami[Id]['Husband ID']]['Name'],fami[Id]['WIFE ID'],indi[fami[Id]['WIFE ID']]['Name'],fami[Id]['Childern'],]
         row2.add_row(line)
     print(row2)
-
-
-
 
 
 def main():
@@ -117,6 +137,10 @@ def main():
                 find_str=get_file_str(file_path)
                 result=get_result(find_str)
                 PPrint(result[0],result[1])
+                print()
+                age=sort_age(result[0],True)
+                print(f"the youngest:{get_youngest(age)}")
+                print(f"the oldest:{get_oldest(age)}")
             except ValueError:
                 print('The file is empty,try again.')
             except FileNotFoundError as e:
@@ -130,5 +154,6 @@ def main():
         #if user enter 'q', break
         if user_choose.lower()=='q':
             break
+
 if __name__=='__main__':
     main()
