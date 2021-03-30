@@ -1,7 +1,2 @@
-# SSW-555-team5
-Team members:
+# SSW-555-team5 Project06
 
-Dekun Chen,
-Gengwu Zhao,
-Hao Jiang,
-Zhiang Hu
