@@ -1,7 +1,6 @@
 0 NOTE one generation of an imaginary family
 0 I01 INDI
 1 NAME Joe /Smith/
-Define	Individual	I01
 1 BIRT
 2 DATE 15 JUL 1960
 1 SEX M
@@ -27,6 +26,18 @@ Define	Individual	I01
 2 DATE 2 JUN 1983
 1 SEX F
 1 FAMC F23
+0 I27 INDI
+1 NAME Jane /Smith2/
+1 BIRT
+2 DATE 2 JUN 2014
+1 SEX F
+1 FAMC F23
+0 I28 INDI
+1 NAME Jane /Smith22/
+1 BIRT
+2 DATE 2 JUN 2014
+1 SEX F
+1 FAMC F23
 0 F23 FAM
 1 MARR
 2 DATE 14 FEB 1980
@@ -34,3 +45,5 @@ Define	Individual	I01
 1 WIFE I07
 1 CHIL I19
 1 CHIL I26
+1 CHIL I27
+1 CHIL I28
