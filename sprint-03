@@ -171,3 +171,69 @@ class function:
                 num+=len(self.fami[F].children)
             children_age.append([num,i])
         return sorted(children_age)
+#us23
+    def without_children(self):
+        none_child=list()
+        for i,j in self.indi.items():
+            if  len(j.spoise)==0:
+                none_child.append(i)
+        return none_child
+    
+    #us 28
+    def single_parents_child(self):
+        single_parent=list()
+        for j in self.fami.values():
+            hs=self.indi[j.husbandId].death=="NA"
+            wf=self.indi[j.wifeId].death=="NA"
+            if hs!=wf:
+                single_parent.extend(j.children)
+        return single_parent
+
+    #us29
+    def odd_age(self):
+        odd=list()
+        for i in self.indi.values():
+            if i.age%2!=0:
+                odd.append(i.id)
+        return odd
+    #us 30
+    def check_parents_num(self):
+        result=True
+        for i in self.indi.values():
+            if len(i.spoise)>1:
+                result=False
+                print(f"The {i.name} (id:{i.id} have {len(i.spoise)} familys.)")
+        return result
+
+if __name__ == '__main__':
+    while True:
+        #give three chance to enter the path of the file
+        for i in range(3):
+            try:
+                file_path=input('Press enter only to use the default test file, \nor enter the file path:')
+                textcase=function(file_path)
+                textcase.PPrint()
+                faimly_name=list(textcase.list_families())
+                print(f"familu id:{faimly_name}")
+                sort_c=textcase.sort_children_num()
+                print(f"id of sort by childern: {sort_c}")
+                withoutc=textcase.without_children()
+                print(f"the id witou child {withoutc}")
+                singlep=textcase.single_parents_child()
+                print(f"the id have only one parent {singlep}")
+                odd=textcase.odd_age()
+                print(f"the id age id odd {odd}")
+                print(f"the parents number check reuslt: {textcase.check_parents_num()}")
+            except ValueError:                
+                print('The file is empty,try again.')
+            except FileNotFoundError as e:
+                print(f"{e}. try again.")
+            else:
+                #if there is no error, print the result and break the for loop to exit.
+                break
+            #if there is an error, not break, tell the left times to the user instead.
+            print(f'You have left {2-i} times')
+        user_choose=input("\nEnter 'q' to exit, any other key to continue:")
+        #if user enter 'q', break
+        if user_choose.lower()=='q':
+            break
